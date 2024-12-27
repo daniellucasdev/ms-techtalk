@@ -1,0 +1,52 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "1m"
+    max-file: "1"
+    tag: "{{.Name}}"
+
+services:
+  app:
+    build:
+      context: dev/docker
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - "8080:80" # set your port here
+    volumes:
+      - "./:/app"
+      - "dev/docker.env:/app/.env"
+    command:
+      - "cmd/http/main.go"
+    restart: unless-stopped
+    logging: *default-logging
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    ports:
+      - "15672:15672" # RabbitMQ management UI
+      - "5672:5672"   # RabbitMQ default port
+    volumes:
+      - dev/rabbitmq-plugins:/etc/rabbitmq/enabled_plugins
+
+  redis:
+    image: redis:7.2-rc-alpine
+    ports:
+      - "6379:6379"
+
+  redisinsight:
+    image: redislabs/redisinsight:1.14.0
+    ports:
+      - "16379:8001"
