@@ -1,0 +1,96 @@
+run:
+  # Timeout for analysis, e.g. 30s, 5m. Default: 1m
+  timeout: 5m
+
+  # Include test files or not. Default: true
+  tests: false
+
+  # Allowed values: readonly|vendor|mod. By default, it isn't set.
+  modules-download-mode: readonly
+
+  # Define the Go version limit.
+  go: '1.23'
+
+linters:
+  enable-all: true
+  # Disable specific linter
+  # https://golangci-lint.run/usage/linters/#disabled-by-default
+  disable:
+    - wsl
+    - depguard
+    - prealloc
+    - gci # estava gerando dor de cabeca ao organizar os imports
+    - gofumpt # estava gerando dor de cabeca ao organizar os imports - testar mais tarde
+    # deprecated:
+    - exportloopref
+
+  # Run only fast linters from enabled linters set (first run won't be fast)
+  # Default: false
+  # fast: true
+
+linters-settings:
+  tagliatelle:
+    # Check the struck tag name case.
+    case:
+      # Use the struct field name to check the name of the struct tag.
+      # Default: false
+      use-field-name: true
+      rules:
+        # Any struct tag type can be used.
+        # Support string case: `camel`, `pascal`, `kebab`, `snake`, `upperSnake`, `goCamel`, `goPascal`, `goKebab`, `goSnake`, `upper`, `lower`, `header`.
+        json: snake
+        # yaml: snake
+        # xml: snake
+
+  revive:
+    rules:
+      - name: if-return
+        disabled: true
+
+  varnamelen:
+    #    # The longest distance, in source lines, that is being considered a "small scope." (defaults to 5)
+    #    # Variables used in at most this many lines will be ignored.
+    #    max-distance: 5
+    #    # The minimum length of a variable's name that is considered "long." (defaults to 3)
+    #    # Variable names that are at least this long will be ignored.
+    #    min-name-length: 3
+    #    # Check method receivers. (defaults to false)
+    #    check-receiver: false
+    #    # Check named return values. (defaults to false)
+    #    check-return: false
+    #    # Check type parameters. (defaults to false)
+    #    check-type-param: false
+    #    # Ignore "ok" variables that hold the bool return value of a type assertion. (defaults to false)
+    #    ignore-type-assert-ok: false
+    #    # Ignore "ok" variables that hold the bool return value of a map index. (defaults to false)
+    #    ignore-map-index-ok: false
+    #    # Ignore "ok" variables that hold the bool return value of a channel receive. (defaults to false)
+    #    ignore-chan-recv-ok: false
+    #    # Optional list of variable names that should be ignored completely. (defaults to empty list)
+    #    ignore-names:
+    #      - err
+    # Optional list of variable declarations that should be ignored completely. (defaults to empty list)
+    # Entries must be in one of the following forms (see below for examples):
+    # - for variables, parameters, named return values, method receivers, or type parameters:
+    #   <name> <type>  (<type> can also be a pointer/slice/map/chan/...)
+    # - for constants: const <name>
+    ignore-decls:
+      - c echo.Context
+      - tx *gorm.DB
+      - db *gorm.DB
+      - gw *gateway.Gateway
+
+issues:
+  exclude-rules:
+    # disable funlen for all translator.go files
+    - path: translator.go
+      linters:
+        - funlen
+
+    # disable exhaustruct for all repositories
+    - path: internal/domain/repository
+      linters:
+        - exhaustruct
+
+  exclude-dirs:
+    - pkg/core

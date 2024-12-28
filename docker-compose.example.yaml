@@ -12,13 +12,14 @@ services:
   app:
     build:
       context: dev/docker
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.debug
     platform: linux/amd64
     ports:
-      - "8080:80" # set your port here
+      - "8080:80"     # set your app port here
+      - "40000:40000" # set your debug port here
     volumes:
       - "./:/app"
-      - "dev/docker.env:/app/.env"
+      - "./dev/docker.env:/app/.env:ro"
     command:
       - "cmd/http/main.go"
     restart: unless-stopped
@@ -39,7 +40,7 @@ services:
       - "15672:15672" # RabbitMQ management UI
       - "5672:5672"   # RabbitMQ default port
     volumes:
-      - dev/rabbitmq-plugins:/etc/rabbitmq/enabled_plugins
+      - "./dev/rabbitmq-plugins:/etc/rabbitmq/enabled_plugins"
 
   redis:
     image: redis:7.2-rc-alpine
