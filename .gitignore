@@ -8,3 +8,6 @@ go.work.sum
 # env file
 **/.env
 /docker-compose.yaml
+
+# mock files
+**/*_mock.go
