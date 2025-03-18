@@ -1,6 +1,6 @@
 apiVersion: v1
-name: ms-video-encoder-api
-description: A Helm chart for ms-video-encoder-api
+name: ms-scaffold-api
+description: A Helm chart for ms-scaffold-api
 
 # A chart can be either an 'application' or a 'library' chart.
 #

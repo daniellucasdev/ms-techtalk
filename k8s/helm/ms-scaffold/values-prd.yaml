@@ -1,4 +1,4 @@
-apiUrl: ms-video-encoder.braip.io
+apiUrl: ms-scaffold.braip.io
 containerPort: 80
 aws:
   accountId: "550375413462"
@@ -11,7 +11,7 @@ secret:
   store: secret-store
   refreshInterval: 1m
   items:
-    file: "prd/services/ms-video-encoder-api"
+    file: "prd/services/ms-scaffold-api"
 app:
   limit:
     cpu: 0.5
