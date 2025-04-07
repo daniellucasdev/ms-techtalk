@@ -1,37 +1,22 @@
 package frontend
 
 import (
-	"github.com/braiphub/go-scaffold/internal/domain/entity"
-	"github.com/braiphub/go-scaffold/internal/domain/model"
+	"github.com/braiphub/ms-tech-talk/internal/domain/entity"
 )
 
-func SearchBookRequestToFilter(dto SearchBookRequestDTO) model.SearchBookFilters {
-	return model.SearchBookFilters{
-		PerPage: dto.PerPage,
-		Cursor:  dto.Cursor,
-		Name:    dto.Name,
+func TranslateCreateSubscriptionRequestToEntity(dto CreateSubscriptionRequestDTO) entity.Subscription {
+	return entity.Subscription{
+		OrderHash: dto.OrderHash,
+		OfferHash: dto.OfferHash,
+		Amount:    dto.Amount,
 	}
 }
 
-func SearchBookResponseToDTO(
-	res *model.SearchBookResponse,
-) SearchBookResponseDTO {
-	var items []SearchBookResponseDTOItem
-
-	for _, book := range res.Items {
-		items = append(items, SearchBookResponseDTOItem{
-			Name:     book.Name,
-			BookType: book.BookType.String(),
-		})
+func TranslateSubscriptionToCreateSubscriptionResponse(subscription *entity.Subscription) entity.Subscription {
+	return entity.Subscription{
+		Hash:      subscription.Hash,
+		OrderHash: subscription.OrderHash,
+		OfferHash: subscription.OfferHash,
+		Amount:    subscription.Amount,
 	}
-
-	return SearchBookResponseDTO{
-		Items:        items,
-		NextPage:     res.NextPage,
-		PreviousPage: res.PreviousPage,
-	}
-}
-
-func TranslateCreateChapterRequestDTOToNewChapterEntity(dto CreateChapterRequestDTO) entity.Chapter {
-	return entity.NewChapter(dto.BookID, dto.ChapterName)
 }

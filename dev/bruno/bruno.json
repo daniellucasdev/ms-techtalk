@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "ms-scaffold",
+  "name": "ms-tech-talk",
   "type": "collection",
   "ignore": [
     "node_modules",

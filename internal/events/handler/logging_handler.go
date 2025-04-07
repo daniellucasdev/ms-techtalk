@@ -2,13 +2,13 @@ package handlers
 
 import (
 	"github.com/braiphub/go-core/log"
-	"github.com/braiphub/go-scaffold/internal/events/event"
+	"github.com/braiphub/ms-tech-talk/internal/events/event"
 )
 
-func (handler *EventHandler) LogBookCreated(ev event.BookCreatedEvent) {
-	handler.logger.Info("book created (sample message from event layer)", log.Any("book_name", ev.Name))
+func (handler *EventHandler) LogOfferCreated(ev event.OfferCreatedEvent) {
+	handler.logger.Info("offer created: ", log.Any("offer_hash", ev.Hash))
 }
 
-func (handler *EventHandler) LogChapterCreated(ev event.ChapterCreatedEvent) {
-	handler.logger.Info("chapter created (sample message from event layer)", log.Any("chapter_name", ev.Chapter.Name))
+func (handler *EventHandler) LogSubscriptionCreated(ev event.SubscriptionCreatedEvent) {
+	handler.logger.Info("subscription created: ", log.Any("subscription_hash", ev.Hash))
 }

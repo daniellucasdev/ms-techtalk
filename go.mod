@@ -1,6 +1,6 @@
-module github.com/braiphub/go-scaffold
+module github.com/braiphub/ms-tech-talk
 
-go 1.23
+go 1.24
 
 require (
 	github.com/asaskevich/EventBus v0.0.0-20200907212545-49d423059eef

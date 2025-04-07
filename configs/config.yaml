@@ -14,27 +14,27 @@ hashId:
 
 rabbitmq:
   connectionString: ${RABBITMQ_DSN}
-  serviceName: "ms-scaffold"
+  serviceName: "ms-tech-talk"
   exchange:
-    name: "ms-scaffold"
+    name: "ms-tech-talk"
     type: "topic"
 
   queues:
-    - name: "ms-scaffold.*"
-      exchange: "ms-scaffold"
+    - name: "ms-tech-talk.*"
+      exchange: "ms-tech-talk"
       routingKey: "#"
 
-    - name: "ms-scaffold.books.created"
-      exchange: "ms-books"
-      routingKey: "book-created"
+    - name: "ms-tech-talk.ms-products.offer-created"
+      exchange: "ms-products"
+      routingKey: "offer-created"
       arguments:
-        x-dead-letter-exchange: "dead-exchange"
-        x-dead-letter-routing-key: "ms-scaffold.books.created.dead"
-        x-queue-type: "quorum"
+          x-dead-letter-exchange: "dead-exchange"
+          x-dead-letter-routing-key: "ms-tech-talk.ms-products.offer-created.dead"
+          x-queue-type: "quorum"
 
-        # Dead letter queues
-    - name: "ms-scaffold.books.created.dead"
+      # Dead letter queues
+    - name:  "ms-tech-talk.ms-products.offer-created.dead"
       exchange: "dead-exchange"
-      routingKey: "ms-scaffold.books.created.dead"
+      routingKey: "ms-tech-talk.ms-products.offer-created.dead"
       arguments:
         x-queue-type: "quorum"

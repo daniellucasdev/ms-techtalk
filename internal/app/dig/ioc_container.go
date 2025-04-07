@@ -5,11 +5,11 @@ import (
 	"github.com/braiphub/go-core/hashid"
 	"github.com/braiphub/go-core/log"
 	"github.com/braiphub/go-core/queue"
-	"github.com/braiphub/go-scaffold/internal/api/http/controller"
-	"github.com/braiphub/go-scaffold/internal/domain/repository"
-	"github.com/braiphub/go-scaffold/internal/domain/service"
-	handlers "github.com/braiphub/go-scaffold/internal/events/handler"
-	"github.com/braiphub/go-scaffold/internal/infra/anticorruption/msbooks"
+	"github.com/braiphub/ms-tech-talk/internal/api/http/controller"
+	"github.com/braiphub/ms-tech-talk/internal/domain/repository"
+	"github.com/braiphub/ms-tech-talk/internal/domain/service"
+	handlers "github.com/braiphub/ms-tech-talk/internal/events/handler"
+	"github.com/braiphub/ms-tech-talk/internal/infra/anticorruption/msproducts"
 	"gorm.io/gorm"
 )
 
@@ -40,58 +40,44 @@ func NewIoCContainer(
 	}
 }
 
-func (c *IoCContainer) BookService() *service.BookService {
-	return service.NewBookService(
-		c.WriteBookRepository(),
-		c.ReadBookRepository(),
-		c.logger,
+func (c *IoCContainer) SubscriptionController() *controller.SubscriptionController {
+	return controller.NewSubscriptionController(
+		c.SubscriptionService(),
 	)
 }
 
-func (c *IoCContainer) ChapterService() *service.ChapterService {
-	return service.NewChapterService(
-		c.WriteChapterRepository(),
-		c.ReadChapterRepository(),
-		c.logger,
+func (c *IoCContainer) OfferService() *service.OfferService {
+	return service.NewOfferService(
+		c.WriteOfferRepository(),
+		c.ReadOfferRepository(),
 	)
 }
 
-func (c *IoCContainer) BookController() *controller.BookController {
-	return controller.NewBookController(c.BookService())
-}
-
-func (c *IoCContainer) ChapterController() *controller.ChapterController {
-	return controller.NewChapterController(c.ChapterService())
-}
-
-func (c *IoCContainer) WriteBookRepository() *repository.WriteBookRepository {
-	return repository.NewWriteBookRepository(c.writeDB)
-}
-
-func (c *IoCContainer) ReadBookRepository() *repository.ReadBookReadRepository {
-	return repository.NewBookReadRepository(c.readDB)
-}
-
-func (c *IoCContainer) WriteChapterRepository() *repository.WriteChapterRepository {
-	return repository.NewWriteChapterRepository(c.writeDB, c.hasher)
-}
-
-func (c *IoCContainer) ReadChapterRepository() *repository.ReadChapterReadRepository {
-	return repository.NewChapterReadRepository(c.readDB)
-}
-
-func (c *IoCContainer) MsBooksAdapter() *msbooks.MsBooksAdapter {
-	return msbooks.NewMsBooksAdapter(
-		c.rabbitMQ,
-		c.BookService(),
+func (c *IoCContainer) SubscriptionService() *service.SubscriptionService {
+	return service.NewSubscriptionService(
+		c.WriteSubscriptionRepository(),
 	)
+}
+
+func (c *IoCContainer) WriteOfferRepository() *repository.WriteOfferRepository {
+	return repository.NewWriteOfferRepository(c.writeDB)
+}
+
+func (c *IoCContainer) ReadOfferRepository() *repository.ReadOfferRepository {
+	return repository.NewReadOfferRepository(c.readDB)
+}
+
+func (c *IoCContainer) WriteSubscriptionRepository() *repository.WriteSubscriptionRepository {
+	return repository.NewWriteSubscriptionRepository(c.writeDB)
+}
+
+func (c *IoCContainer) MsProductsAdapter() *msproducts.Adapter {
+	return msproducts.NewAdapter(c.rabbitMQ, c.OfferService())
 }
 
 func (c *IoCContainer) EventHandler() *handlers.EventHandler {
 	return handlers.NewEventHandler(
 		c.logger,
-		c.MsBooksAdapter(),
-		c.ChapterService(),
 	)
 }
 

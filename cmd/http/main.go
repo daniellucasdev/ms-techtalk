@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/braiphub/go-scaffold/cmd/http/components"
-	"github.com/braiphub/go-scaffold/internal/api/http"
+	"github.com/braiphub/ms-tech-talk/cmd/http/components"
+	"github.com/braiphub/ms-tech-talk/internal/api/http"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/pkg/errors"
 )
@@ -28,13 +28,12 @@ func run() error {
 	stp.Container.EventHandler().StartListeners()
 
 	// integration event consumers
-	stp.Container.MsBooksAdapter().StartConsumers(appCtx)
+	stp.Container.MsProductsAdapter().StartConsumers(appCtx)
 
 	// api handler
 	apiServer := http.NewAPIServer(stp.Container.Logger())
 	apiServer.ConfigureRoutes(
-		stp.Container.BookController(),
-		stp.Container.ChapterController(),
+		stp.Container.SubscriptionController(),
 	)
 	apiServer.Start(80) //nolint:mnd
 

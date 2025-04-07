@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/braiphub/go-core/braipfilter"
-	"github.com/braiphub/go-scaffold/internal/domain/entity"
+	"github.com/braiphub/ms-tech-talk/internal/domain/entity"
 	"gorm.io/gorm"
 )
 

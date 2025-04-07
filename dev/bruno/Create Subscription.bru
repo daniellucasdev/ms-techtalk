@@ -1,0 +1,19 @@
+meta {
+  name: Create Subscription
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/subscriptions
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "order_hash":"ord123",
+    "offer_hash": "off123",
+    "amount": 12000
+  }
+}

@@ -3,12 +3,12 @@ package http
 import (
 	"context"
 	"fmt"
+	"github.com/braiphub/ms-tech-talk/internal/api/http/controller"
 	"net/http"
 	"time"
 
 	"github.com/braiphub/go-core/log"
-	"github.com/braiphub/go-scaffold/internal/api/http/controller"
-	"github.com/braiphub/go-scaffold/internal/api/http/middleware"
+	"github.com/braiphub/ms-tech-talk/internal/api/http/middleware"
 	"github.com/labstack/echo/v4"
 	echo_middleware "github.com/labstack/echo/v4/middleware"
 )
@@ -63,13 +63,11 @@ func (server *APIServer) Start(port uint16) {
 }
 
 func (server *APIServer) ConfigureRoutes(
-	bookController *controller.BookController,
-	chapterController *controller.ChapterController,
+	subscriptionController *controller.SubscriptionController,
 ) {
 	server.router.GET("/health", func(c echo.Context) error {
 		return c.String(http.StatusOK, "OK")
 	})
 
-	server.router.GET("/books", bookController.Search)
-	server.router.POST("/chapters", chapterController.Create)
+	server.router.POST("/subscriptions", subscriptionController.CreateSubscription)
 }
