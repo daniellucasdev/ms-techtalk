@@ -28,13 +28,27 @@ rabbitmq:
       exchange: "ms-products"
       routingKey: "offer-created"
       arguments:
-          x-dead-letter-exchange: "dead-exchange"
-          x-dead-letter-routing-key: "ms-tech-talk.ms-products.offer-created.dead"
-          x-queue-type: "quorum"
+        x-dead-letter-exchange: "dead-exchange"
+        x-dead-letter-routing-key: "ms-tech-talk.ms-products.offer-created.dead"
+        x-queue-type: "quorum"
+
+    - name: "ms-tech-talk.ms-orders.order-created"
+      exchange: "ms-products"
+      routingKey: "offer-created"
+      arguments:
+        x-dead-letter-exchange: "dead-exchange"
+        x-dead-letter-routing-key: "ms-tech-talk.ms-products.offer-created.dead"
+        x-queue-type: "quorum"
 
       # Dead letter queues
-    - name:  "ms-tech-talk.ms-products.offer-created.dead"
+    - name: "ms-tech-talk.ms-products.offer-created.dead"
       exchange: "dead-exchange"
       routingKey: "ms-tech-talk.ms-products.offer-created.dead"
+      arguments:
+        x-queue-type: "quorum"
+
+    - name: "ms-tech-talk.ms-orders.order-created.dead"
+      exchange: "dead-exchange"
+      routingKey: "ms-tech-talk.ms-orders.order-created.dead"
       arguments:
         x-queue-type: "quorum"
