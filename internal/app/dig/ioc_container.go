@@ -10,6 +10,8 @@ import (
 	"github.com/braiphub/ms-tech-talk/internal/domain/service"
 	handlers "github.com/braiphub/ms-tech-talk/internal/events/handler"
 	"github.com/braiphub/ms-tech-talk/internal/infra/anticorruption/msproducts"
+	"github.com/braiphub/ms-tech-talk/internal/infra/anticorruption/msorders"
+
 	"gorm.io/gorm"
 )
 
@@ -74,7 +76,7 @@ func (c *IoCContainer) MsProductsAdapter() *msproducts.Adapter {
 }
 
 func (c *IoCContainer) MsOrdersAdapter() *msorders.Adapter {
-return msorders.NewAdapter(c.rabbitMQ, c.OfferService())
+return msorders.NewAdapter(c.rabbitMQ, c.OfferService, c.Logger())
 }
 
 func (c *IoCContainer) EventHandler() *handlers.EventHandler {
