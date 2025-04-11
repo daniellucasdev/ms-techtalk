@@ -30,6 +30,9 @@ func run() error {
 	// integration event consumers
 	stp.Container.MsProductsAdapter().StartConsumers(appCtx)
 
+	stp.Container.MsOrdersAdapter().StartConsumers(appCtx)
+
+
 	// api handler
 	apiServer := http.NewAPIServer(stp.Container.Logger())
 	apiServer.ConfigureRoutes(
