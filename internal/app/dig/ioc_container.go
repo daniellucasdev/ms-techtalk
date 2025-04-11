@@ -73,6 +73,10 @@ func (c *IoCContainer) MsProductsAdapter() *msproducts.Adapter {
 	return msproducts.NewAdapter(c.rabbitMQ, c.OfferService())
 }
 
+func (c *IoCContainer) MsOrdersAdapter() *msorders.Adapter {
+return msorders.NewAdapter(c.rabbitMQ, c.OfferService())
+}
+
 func (c *IoCContainer) EventHandler() *handlers.EventHandler {
 	return handlers.NewEventHandler(
 		c.logger,

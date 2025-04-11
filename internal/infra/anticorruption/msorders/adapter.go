@@ -17,3 +17,7 @@ func NewAdapter (queue queue.QueueI, offerSvc OfferService) *Adapter {
 		offerSvc: offerSvc,
 	}
 }
+
+func (a *Adapter) StartConsumers(ctx context.Context) {
+	
+}
