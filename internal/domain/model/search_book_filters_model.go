@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/braiphub/go-core/braipfilter"
-	"github.com/braiphub/ms-tech-talk/internal/domain/entity"
 	"gorm.io/gorm"
 )
 
@@ -22,5 +21,4 @@ func (sf SearchBookFilters) Scope(db *gorm.DB) *gorm.DB {
 
 type SearchBookResponse struct {
 	braipfilter.PaginateCursor
-	Items []entity.Book
 }

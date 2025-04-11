@@ -40,10 +40,8 @@ func NewIoCContainer(
 	}
 }
 
-func (c *IoCContainer) SubscriptionController() *controller.SubscriptionController {
-	return controller.NewSubscriptionController(
-		c.SubscriptionService(),
-	)
+func (c *IoCContainer) HealthController() *controller.HelathController {
+	return controller.NewHealthController()
 }
 
 func (c *IoCContainer) OfferService() *service.OfferService {
@@ -68,7 +66,7 @@ func (c *IoCContainer) ReadOfferRepository() *repository.ReadOfferRepository {
 }
 
 func (c *IoCContainer) WriteSubscriptionRepository() *repository.WriteSubscriptionRepository {
-	return repository.NewWriteSubscriptionRepository(c.writeDB)
+	return repository.NewWriteSubscriptionRepository(c.writeDB, c.hasher)
 }
 
 func (c *IoCContainer) MsProductsAdapter() *msproducts.Adapter {

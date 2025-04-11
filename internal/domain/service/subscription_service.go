@@ -34,7 +34,7 @@ func (s *SubscriptionService) Create(
 
 	s.bus.Publish(event.SubscriptionCreated, event.SubscriptionCreatedEvent{
 		Hash:      subscription.Hash,
-		OfferHash: subscription.OfferHash,
+		OfferHash: subscription.Offer.Hash,
 	})
 
 	return nil

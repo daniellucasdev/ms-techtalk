@@ -63,11 +63,7 @@ func (server *APIServer) Start(port uint16) {
 }
 
 func (server *APIServer) ConfigureRoutes(
-	subscriptionController *controller.SubscriptionController,
+	healthController *controller.HelathController,
 ) {
-	server.router.GET("/health", func(c echo.Context) error {
-		return c.String(http.StatusOK, "OK")
-	})
-
-	server.router.POST("/subscriptions", subscriptionController.CreateSubscription)
+	server.router.GET("/health", healthController.Check)
 }

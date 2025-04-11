@@ -7,7 +7,6 @@ import (
 func TranslateCreateSubscriptionRequestToEntity(dto CreateSubscriptionRequestDTO) entity.Subscription {
 	return entity.Subscription{
 		OrderHash: dto.OrderHash,
-		OfferHash: dto.OfferHash,
 		Amount:    dto.Amount,
 	}
 }
@@ -16,7 +15,6 @@ func TranslateSubscriptionToCreateSubscriptionResponse(subscription *entity.Subs
 	return entity.Subscription{
 		Hash:      subscription.Hash,
 		OrderHash: subscription.OrderHash,
-		OfferHash: subscription.OfferHash,
 		Amount:    subscription.Amount,
 	}
 }

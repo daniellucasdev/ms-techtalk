@@ -33,7 +33,7 @@ func run() error {
 	// api handler
 	apiServer := http.NewAPIServer(stp.Container.Logger())
 	apiServer.ConfigureRoutes(
-		stp.Container.SubscriptionController(),
+		stp.Container.HealthController(),
 	)
 	apiServer.Start(80) //nolint:mnd
 
